@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://baktb3coh6td6"]
+
+[ext_resource type="Script" uid="uid://hy7g4yfm6bcj" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://cvpufyf01s0or" path="res://player/input_synchronizer.gd" id="2_rkbax"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oul6g"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:player_id")
+properties/2/spawn = true
+properties/2/replication_mode = 0
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
+properties/0/path = NodePath("InputSynchronizer:motion")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("neck:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b1ji6"]
+radius = 0.45
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mcl3r"]
+radius = 0.45
+
+[node name="Player" type="CharacterBody3D" unique_id=1800594660]
+script = ExtResource("1_oul6g")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1431897778]
+replication_config = SubResource("SceneReplicationConfig_oul6g")
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=527309145 node_paths=PackedStringArray("camera", "player", "neck")]
+replication_config = SubResource("SceneReplicationConfig_rkbax")
+script = ExtResource("2_rkbax")
+camera = NodePath("../neck/Camera3D")
+player = NodePath("..")
+neck = NodePath("../neck")
+
+[node name="player_body" type="Node3D" parent="." unique_id=394802805]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="player_body" unique_id=1866220843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_b1ji6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1496833714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_mcl3r")
+
+[node name="neck" type="Node3D" parent="." unique_id=2098287970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, -0.6)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="neck" unique_id=1047529984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20000005, 0.6)
+light_color = Color(1, 1, 0.31764707, 1)
+spot_range = 4.0
+spot_angle = 16.16267
+
+[node name="Camera3D" type="Camera3D" parent="neck" unique_id=1097834576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.20000002)
+fov = 90.0
+
+[node name="ChestRay" type="RayCast3D" parent="." unique_id=145531369]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.5, 0)
+target_position = Vector3(0, -1.5, 0)
+
+[node name="StepRay" type="RayCast3D" parent="." unique_id=881613372]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.19999993, 0)
+target_position = Vector3(0, -1.5, 0)

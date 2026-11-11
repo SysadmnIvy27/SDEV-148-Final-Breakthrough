@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://dwoey88ml5c3c"]
+
+[ext_resource type="Script" uid="uid://cbaf5krunxc1h" path="res://ui/menus/mainmenu/mainmenu.gd" id="1_4qrq3"]
+
+[node name="Mainmenu" type="Control" unique_id=1536854135]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4qrq3")
+
+[node name="menu" type="Control" parent="." unique_id=818539398]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="menu" unique_id=174811261]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -377.5
+offset_right = 377.5
+offset_bottom = 67.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Amongst the void: Breakthrough"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu" unique_id=1351972353]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.5
+offset_top = -33.0
+offset_right = 89.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Debug_level" type="Button" parent="menu/VBoxContainer" unique_id=1999329298]
+layout_mode = 2
+text = "Debug level"
+
+[node name="Connect" type="Button" parent="menu/VBoxContainer" unique_id=1677534797]
+layout_mode = 2
+text = "Connect to local game"
+
+[node name="ip_textbox" type="LineEdit" parent="menu/VBoxContainer" unique_id=1890352408]
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "Enter Server IP"
+max_length = 15
+
+[node name="loading" type="Control" parent="." unique_id=2061711595]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="loading" unique_id=1764642459]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -27.0
+offset_right = 31.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Loading_txt" type="Label" parent="loading/VBoxContainer" unique_id=1018460729]
+layout_mode = 2
+text = "Loading, please wait"
+horizontal_alignment = 1
+
+[node name="Loading_Bar" type="ProgressBar" parent="loading/VBoxContainer" unique_id=1290705773]
+custom_minimum_size = Vector2(256, 32)
+layout_mode = 2
+
+[node name="Timer_Load" type="Timer" parent="." unique_id=1709949072]
+one_shot = true
+
+[connection signal="pressed" from="menu/VBoxContainer/Debug_level" to="." method="_on_debug_level_pressed"]
+[connection signal="pressed" from="menu/VBoxContainer/Connect" to="." method="_on_connect_pressed"]
+[connection signal="timeout" from="Timer_Load" to="." method="_on_timer_load_timeout"]
