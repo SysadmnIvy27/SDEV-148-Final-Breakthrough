@@ -20,6 +20,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if player.lock_movement: return
 	motion = Input.get_vector("left", "right", "forward", "backward").normalized()
 	if Input.is_action_just_pressed("jump"):
 		jump.rpc()
@@ -30,6 +31,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if player.lock_movement: return
 	if event is InputEventMouseMotion and GameGlobals.mouse_is_controling:
 		# mouse movement
 		neck.rotate_x(deg_to_rad(-event.relative.y * GameGlobals.mouse_sens))

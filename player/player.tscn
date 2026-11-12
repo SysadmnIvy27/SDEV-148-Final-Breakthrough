@@ -15,7 +15,13 @@ properties/2/spawn = true
 properties/2/replication_mode = 0
 properties/3/path = NodePath(".:rotation")
 properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/replication_mode = 0
+properties/4/path = NodePath("neck:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 0
+properties/5/path = NodePath(".:lock_movement")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
 properties/0/path = NodePath("InputSynchronizer:motion")
@@ -27,6 +33,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("neck:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:lock_movement")
+properties/3/spawn = true
+properties/3/replication_mode = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_b1ji6"]
 radius = 0.45

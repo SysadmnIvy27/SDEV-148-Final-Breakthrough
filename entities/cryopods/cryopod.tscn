@@ -173,15 +173,12 @@ _data = {
 size = Vector3(1.1318359, 2.0581055, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v72ky"]
-properties/0/path = NodePath("model/AnimationPlayer:current_animation")
+properties/0/path = NodePath("model/root/door_R:rotation")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("model/root/door_R:rotation")
+properties/1/path = NodePath("model/root/door_L:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("model/root/door_L:rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [node name="Cryopod" type="Node3D" unique_id=1985600543 node_paths=PackedStringArray("spawn_marker", "anim", "interior_collision")]
 script = ExtResource("1_v72ky")

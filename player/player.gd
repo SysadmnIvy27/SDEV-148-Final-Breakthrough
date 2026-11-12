@@ -26,12 +26,21 @@ var motion := Vector2()
 var drone : Node
 	
 func _ready() -> void:
-	server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+	#server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+	#server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
 	GameGlobals.mouse_is_controling = true
 	if not multiplayer.is_server():
 		set_process(false)
 	
 func _physics_process(delta: float) -> void:
+	'''
+	if lock_movement:
+		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
+		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
+	else:
+		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+	'''
 	if multiplayer.is_server():
 		apply_input(delta)
 	"""
@@ -53,7 +62,7 @@ func apply_input(delta):
 	# player movement
 	motion = player_input.motion
 	var dir := (transform.basis * Vector3(motion.x, 0, motion.y)).normalized()
-
+	
 	# Get the input direction and handle the movement/deceleration.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -64,8 +73,8 @@ func apply_input(delta):
 		sprint.rpc()
 	else:
 		current_speed = walk_speed
-	if not chest_ray.is_colliding() and step_ray.is_colliding() and Input.is_action_pressed("forward") and not lock_movement:
-		position.y += 1
+	#if not chest_ray.is_colliding() and step_ray.is_colliding() and Input.is_action_pressed("forward") and not lock_movement:
+	#	position.y += 1
 	if is_on_floor() and not lock_movement:
 		if motion:
 			velocity.x = dir.x * current_speed
@@ -84,3 +93,15 @@ func jump():
 func sprint():
 	current_speed = sprint_speed
 	player_input.sprinting = false
+
+'''
+@rpc("call_remote")
+func lock_rotation():
+	# temporarily controls player rotation for cryo positioning
+	if lock_movement:
+		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
+		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
+	else:
+		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
+'''
