@@ -86,3 +86,11 @@ target_position = Vector3(0, -1.5, 0)
 [node name="StepRay" type="RayCast3D" parent="." unique_id=881613372]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.19999993, 0)
 target_position = Vector3(0, -1.5, 0)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1094584264]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

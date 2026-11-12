@@ -6,11 +6,12 @@ extends CharacterBody3D
 @onready var step_ray: RayCast3D = $StepRay
 @onready var server_sync : MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var player_input : PlayerInputSyncronizer = $InputSynchronizer
+@onready var color_rect: ColorRect = $ColorRect
 
 @export var current_speed = 5.0
 @export var deceleration = 2.0
 @export var mouse_sensivity = GameGlobals.mouse_sens
-@export var lock_movement = false
+@export var lock_movement = true
 @export var lock_interaction = false
 @export var player_id: int = 1:
 	set(value):
@@ -26,37 +27,17 @@ var motion := Vector2()
 var drone : Node
 	
 func _ready() -> void:
-	#server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
-	#server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
 	GameGlobals.mouse_is_controling = true
 	if not multiplayer.is_server():
 		set_process(false)
+	#var load_tween = get_tree().create_tween()
+	#load_tween.tween_property(ColorRect, "modulate.a", 0.0, 3.0)
+	#await load_tween.finished
+	
 	
 func _physics_process(delta: float) -> void:
-	'''
-	if lock_movement:
-		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
-		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
-	else:
-		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
-		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
-	'''
 	if multiplayer.is_server():
 		apply_input(delta)
-	"""
-	if lock_movement:
-		set_process_input(false)
-		return
-	else:
-		set_process_input(true)
-	# Add the gravity.
-	if is_on_floor():
-		velocity = Vector3.ZERO
-	if Input.is_action_pressed("sprint") and not lock_movement:
-		
-	else:
-		current_speed = walk_speed
-	"""
 
 func apply_input(delta):
 	# player movement
@@ -93,15 +74,3 @@ func jump():
 func sprint():
 	current_speed = sprint_speed
 	player_input.sprinting = false
-
-'''
-@rpc("call_remote")
-func lock_rotation():
-	# temporarily controls player rotation for cryo positioning
-	if lock_movement:
-		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
-		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
-	else:
-		server_sync.replication_config.property_set_replication_mode(^".:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
-		server_sync.replication_config.property_set_replication_mode(^"neck:rotation",SceneReplicationConfig.REPLICATION_MODE_NEVER)
-'''

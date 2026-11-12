@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 func _on_player_join():
 	spawnable = false
 	spawned_player.lock_movement = true
+	await get_tree().create_timer(4).timeout
 	anim.play(&"open")
 	await anim.animation_finished
 	spawned_player.lock_movement = false
