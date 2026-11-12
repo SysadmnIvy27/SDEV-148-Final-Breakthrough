@@ -1,6 +1,6 @@
 # Changelog
 
-## hotfix v0.0.2
+## hotfix v0.0.3
 - fixed fade in issue with player
 
 ## hotfix v0.0.2
