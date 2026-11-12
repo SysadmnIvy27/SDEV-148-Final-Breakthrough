@@ -1,6 +1,9 @@
 # Changelog
 
 ## hotfix v0.0.2
+- fixed fade in issue with player
+
+## hotfix v0.0.2
 - fixed issue with flickering cryopod
 - fixed issue with lock_movement logic
 

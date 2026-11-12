@@ -7,15 +7,22 @@ extends MultiplayerSynchronizer
 @export var camera : Camera3D
 @export var player : CharacterBody3D
 @export var neck : Node3D
-
+@export var player_first_load : bool = false
+@export var color_rect: ColorRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if get_multiplayer_authority() == multiplayer.get_unique_id(): #
 		camera.make_current()
+		if !player_first_load:
+				var load_tween = get_tree().create_tween()
+				load_tween.tween_property(color_rect, "modulate", Color(0.0, 0.0, 0.0, 0.0), 3.0)
+				await load_tween.finished
+				player_first_load = true
 	else:
 		set_process(false)
 		set_process_input(false)
+		color_rect.hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -49,12 +49,13 @@ script = ExtResource("1_oul6g")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1431897778]
 replication_config = SubResource("SceneReplicationConfig_oul6g")
 
-[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=527309145 node_paths=PackedStringArray("camera", "player", "neck")]
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=527309145 node_paths=PackedStringArray("camera", "player", "neck", "color_rect")]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 script = ExtResource("2_rkbax")
 camera = NodePath("../neck/Camera3D")
 player = NodePath("..")
 neck = NodePath("../neck")
+color_rect = NodePath("../ColorRect")
 
 [node name="player_body" type="Node3D" parent="." unique_id=394802805]
 

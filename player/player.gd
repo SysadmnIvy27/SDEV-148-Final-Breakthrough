@@ -6,7 +6,6 @@ extends CharacterBody3D
 @onready var step_ray: RayCast3D = $StepRay
 @onready var server_sync : MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var player_input : PlayerInputSyncronizer = $InputSynchronizer
-@onready var color_rect: ColorRect = $ColorRect
 
 @export var current_speed = 5.0
 @export var deceleration = 2.0
@@ -30,10 +29,6 @@ func _ready() -> void:
 	GameGlobals.mouse_is_controling = true
 	if not multiplayer.is_server():
 		set_process(false)
-	#var load_tween = get_tree().create_tween()
-	#load_tween.tween_property(ColorRect, "modulate.a", 0.0, 3.0)
-	#await load_tween.finished
-	
 	
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
