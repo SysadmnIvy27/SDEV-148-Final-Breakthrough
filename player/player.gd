@@ -6,12 +6,14 @@ extends CharacterBody3D
 @onready var step_ray: RayCast3D = $StepRay
 @onready var server_sync : MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var player_input : PlayerInputSyncronizer = $InputSynchronizer
+@onready var inventory_controller: Node = $inventory_controller
 
 @export var current_speed = 5.0
 @export var deceleration = 2.0
 @export var mouse_sensivity = GameGlobals.mouse_sens
 @export var lock_movement = true
 @export var lock_interaction = false
+@export var inventory_manager : GameInventoryManager
 @export var player_id: int = 1:
 	set(value):
 		player_id = value
@@ -26,9 +28,10 @@ var motion := Vector2()
 var drone : Node
 	
 func _ready() -> void:
-	GameGlobals.mouse_is_controling = true
 	if not multiplayer.is_server():
 		set_process(false)
+	GameGlobals.mouse_is_controling = true
+	player_input.inventory_manager = inventory_manager
 	
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():

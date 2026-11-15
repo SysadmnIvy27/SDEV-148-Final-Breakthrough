@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://hy7g4yfm6bcj" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://cvpufyf01s0or" path="res://player/input_synchronizer.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://bal27uhjywcw1" path="res://scripts/components/inventory_manager.gd" id="3_g1dw6"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oul6g"]
 properties/0/path = NodePath(".:position")
@@ -22,6 +23,9 @@ properties/4/replication_mode = 0
 properties/5/path = NodePath(".:lock_movement")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("inventory_controller:inventory")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
 properties/0/path = NodePath("InputSynchronizer:motion")
@@ -49,13 +53,16 @@ script = ExtResource("1_oul6g")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1431897778]
 replication_config = SubResource("SceneReplicationConfig_oul6g")
 
-[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=527309145 node_paths=PackedStringArray("camera", "player", "neck", "color_rect")]
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=527309145 node_paths=PackedStringArray("camera", "player", "neck", "interact_ray", "color_rect", "helper_label", "inventory_controller")]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 script = ExtResource("2_rkbax")
 camera = NodePath("../neck/Camera3D")
 player = NodePath("..")
 neck = NodePath("../neck")
+interact_ray = NodePath("../neck/interaction_ray")
 color_rect = NodePath("../ColorRect")
+helper_label = NodePath("../tip_label")
+inventory_controller = NodePath("../inventory_controller")
 
 [node name="player_body" type="Node3D" parent="." unique_id=394802805]
 
@@ -80,6 +87,10 @@ spot_angle = 16.16267
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.20000002)
 fov = 90.0
 
+[node name="interaction_ray" type="RayCast3D" parent="neck" unique_id=1021939107]
+target_position = Vector3(0, 0, -3)
+collide_with_areas = true
+
 [node name="ChestRay" type="RayCast3D" parent="." unique_id=145531369]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.5, 0)
 target_position = Vector3(0, -1.5, 0)
@@ -89,9 +100,28 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0
 target_position = Vector3(0, -1.5, 0)
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1094584264]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="tip_label" type="Label" parent="." unique_id=1885639905]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press 'lmb' to pick up."
+
+[node name="inventory_controller" type="Node" parent="." unique_id=271264142]
+script = ExtResource("3_g1dw6")
+debug = true

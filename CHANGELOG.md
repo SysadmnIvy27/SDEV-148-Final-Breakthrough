@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.0
+- added fully implemented inventory system (working on client and server)
+- added debug item for testing
+- added item registry autoload
+- added class gameinventorymanager to control inventory actions
+
 ## hotfix v0.0.3
 - fixed fade in issue with player
 
