@@ -18,6 +18,7 @@ sky = SubResource("Sky_pjrb6")
 
 [node name="TestingLvl" type="Node3D" unique_id=1562706987]
 script = ExtResource("1_8jedw")
+game_type = "debug"
 
 [node name="Game_Managers" type="Node" parent="." unique_id=1871300750]
 

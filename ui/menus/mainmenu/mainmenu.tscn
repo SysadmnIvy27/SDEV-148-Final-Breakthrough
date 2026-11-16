@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_4qrq3")
 
 [node name="menu" type="Control" parent="." unique_id=818539398]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,13 +52,85 @@ text = "Debug level"
 
 [node name="Connect" type="Button" parent="menu/VBoxContainer" unique_id=1677534797]
 layout_mode = 2
-text = "Connect to local game"
+text = "Connect to multiplayer game"
 
 [node name="ip_textbox" type="LineEdit" parent="menu/VBoxContainer" unique_id=1890352408]
 layout_mode = 2
 text = "127.0.0.1"
 placeholder_text = "Enter Server IP"
 max_length = 15
+
+[node name="servers" type="Control" parent="." unique_id=755996629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="servers" type="VBoxContainer" parent="servers" unique_id=1847012994]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Server_list" type="MarginContainer" parent="servers/servers" unique_id=752825742]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="servers/servers/Server_list" unique_id=2088986271]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="serverlist" type="VBoxContainer" parent="servers/servers/Server_list/ScrollContainer" unique_id=304835677]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Example_connection" type="HBoxContainer" parent="servers/servers/Server_list/ScrollContainer/serverlist" unique_id=478536306]
+layout_mode = 2
+
+[node name="Location" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=55370428]
+layout_mode = 2
+text = "Localhost"
+
+[node name="World_Type" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=1854579637]
+layout_mode = 2
+text = "World: Debug"
+
+[node name="PlayerCount" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=352825701]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Players: 4 / 5"
+
+[node name="Button" type="Button" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=1969826945]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Connect"
+
+[node name="Server_connection" type="MarginContainer" parent="servers/servers" unique_id=1899510363]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="servers/servers/Server_connection" unique_id=1449837175]
+layout_mode = 2
+alignment = 1
+
+[node name="Add_Server" type="Button" parent="servers/servers/Server_connection/HBoxContainer" unique_id=774550687]
+layout_mode = 2
+text = "Add Server"
+
+[node name="Back_button" type="Button" parent="servers/servers/Server_connection/HBoxContainer" unique_id=2054670786]
+layout_mode = 2
+text = "Back"
 
 [node name="loading" type="Control" parent="." unique_id=2061711595]
 visible = false
