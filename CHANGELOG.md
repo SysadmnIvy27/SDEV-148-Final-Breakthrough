@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.0
+- added local server recognition with timeout support and live updates
+- full multiplayer support planned in next update
+
 ## v0.1.0
 - added fully implemented inventory system (working on client and server)
 - added debug item for testing

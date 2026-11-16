@@ -83,6 +83,7 @@ func add_spawnable_items():
 func ping():
 	while true:
 		await get_tree().create_timer(3).timeout
+		game_info = {"GameType" : game_type, "max_players" : max_players, "current_players" : num_players}
 		var serialized_info = JSON.stringify(game_info).to_utf8_buffer()
 		broadcast_peer.put_packet(serialized_info)
 		print("ping: " + str(game_info))

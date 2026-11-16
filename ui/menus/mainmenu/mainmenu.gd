@@ -1,16 +1,18 @@
 extends Control
 
-#const debug_level_Path : String = "res://levels/testing_level/testing_lvl.tscn"
 var gamepath : String
 const game_types = {"debug" : {"path" : "res://levels/testing_level/testing_lvl.tscn"}}
 
+# menu ui elements
 @onready var menu = $menu
 @onready var loading = $loading
 @onready var loading_bar: ProgressBar = $loading/VBoxContainer/Loading_Bar
 @onready var timer_load: Timer = $Timer_Load
-@onready var ip_textbox: LineEdit = $menu/VBoxContainer/ip_textbox
-
+# multiplayer ui elements
+@onready var servers: Control = $servers
 @onready var serverlist: VBoxContainer = $servers/servers/Server_list/ScrollContainer/serverlist
+
+@export var entry_scene : PackedScene
 
 signal start_game
 
@@ -46,14 +48,15 @@ func _process(delta: float) -> void:
 			var data = listen_peer.get_packet()
 			var parsed_string = data.get_string_from_utf8()
 			var dict = JSON.parse_string(parsed_string)
-			dict["ip"] = data.get_packet_ip()
+			dict["ip"] = listen_peer.get_packet_ip()
+			print(dict)
 			var added_server = false
 			for child in serverlist.get_children():
-				if child.name == ("server_" + dict["ip"]):
+				if child.ip == dict["ip"]:
+					child.update_info(dict)
 					added_server = true
 			if !added_server:
 				add_entry(dict)
-			print(dict)
 
 func _on_debug_level_pressed() -> void:
 	peer = ENetMultiplayerPeer.new()
@@ -64,28 +67,32 @@ func _on_debug_level_pressed() -> void:
 	ResourceLoader.load_threaded_request(gamepath,"",true)
 
 func _on_connect_pressed() -> void:
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(ip_textbox.text, game_port)
 	menu.hide()
-	loading.show()
-	if !gamepath:
-		gamepath = game_types["debug"]["path"]
-	ResourceLoader.load_threaded_request(gamepath,"",true)
+	servers.show()
 
 func _on_timer_load_timeout() -> void:
 	multiplayer.multiplayer_peer = peer
 	emit_signal("start_game",ResourceLoader.load_threaded_get(gamepath))
 
 func add_entry(data): # data = game_info = {"GameType" : game_type, "max_players" : max_players, "current_players" : num_players, "ip" : ip_address}
-	# making required controls
-	var connection_box = HBoxContainer.new()
-	var host_label = Label.new()
-	var type_label = Label.new()
-	var player_count = Label.new()
-	var connect_button = Button.new()
-	# setting up container
-	connection_box.name = ("server_" + data["ip"])
-	host_label.text = data["ip"]
-	type_label.text = data["GameType"]
-	player_count.text = (data["current_players"] + " / " + data["max_players"])
-	#player_count.
+	var entry = entry_scene.instantiate()
+	entry.ip = data["ip"]
+	entry.game_type = data["GameType"]
+	entry.num_players = data["current_players"]
+	entry.max_players = data["max_players"]
+	entry.join_game.connect(join_game)
+	serverlist.add_child(entry)
+
+func join_game(ip : String, gametype : String):
+	peer = ENetMultiplayerPeer.new()
+	peer.create_client(ip, game_port)
+	menu.hide()
+	servers.hide()
+	loading.show()
+	gamepath = game_types[gametype]["path"]
+	ResourceLoader.load_threaded_request(gamepath,"",true)
+
+
+func _on_back_button_pressed() -> void:
+	servers.hide()
+	menu.show()

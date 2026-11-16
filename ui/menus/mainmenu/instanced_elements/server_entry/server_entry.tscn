@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://kbp8gc6uad16"]
+
+[ext_resource type="Script" uid="uid://cw3c5he01b31e" path="res://ui/menus/mainmenu/instanced_elements/server_entry/server_entry.gd" id="1_yvsef"]
+
+[node name="ServerEntry" type="HBoxContainer" unique_id=1511878176]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_yvsef")
+
+[node name="Location" type="Label" parent="." unique_id=1602534455]
+layout_mode = 2
+text = "Localhost"
+
+[node name="World_Type" type="Label" parent="." unique_id=1581453667]
+layout_mode = 2
+text = "World: Debug"
+
+[node name="Player_Count" type="Label" parent="." unique_id=752346980]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Players: 4 / 5"
+
+[node name="Join_Button" type="Button" parent="." unique_id=1229719340]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Connect"
+
+[node name="removal_timeout" type="Timer" parent="." unique_id=285212953]
+wait_time = 6.0
+one_shot = true
+
+[connection signal="pressed" from="Join_Button" to="." method="_on_join_button_pressed"]

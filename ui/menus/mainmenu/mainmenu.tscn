@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dwoey88ml5c3c"]
 
 [ext_resource type="Script" uid="uid://cbaf5krunxc1h" path="res://ui/menus/mainmenu/mainmenu.gd" id="1_4qrq3"]
+[ext_resource type="PackedScene" uid="uid://kbp8gc6uad16" path="res://ui/menus/mainmenu/instanced_elements/server_entry/server_entry.tscn" id="2_x2qex"]
 
 [node name="Mainmenu" type="Control" unique_id=1536854135]
 layout_mode = 3
@@ -10,9 +11,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4qrq3")
+entry_scene = ExtResource("2_x2qex")
 
 [node name="menu" type="Control" parent="." unique_id=818539398]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,13 +55,8 @@ text = "Debug level"
 layout_mode = 2
 text = "Connect to multiplayer game"
 
-[node name="ip_textbox" type="LineEdit" parent="menu/VBoxContainer" unique_id=1890352408]
-layout_mode = 2
-text = "127.0.0.1"
-placeholder_text = "Enter Server IP"
-max_length = 15
-
 [node name="servers" type="Control" parent="." unique_id=755996629]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,27 +88,6 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Example_connection" type="HBoxContainer" parent="servers/servers/Server_list/ScrollContainer/serverlist" unique_id=478536306]
-layout_mode = 2
-
-[node name="Location" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=55370428]
-layout_mode = 2
-text = "Localhost"
-
-[node name="World_Type" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=1854579637]
-layout_mode = 2
-text = "World: Debug"
-
-[node name="PlayerCount" type="Label" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=352825701]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "Players: 4 / 5"
-
-[node name="Button" type="Button" parent="servers/servers/Server_list/ScrollContainer/serverlist/Example_connection" unique_id=1969826945]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "Connect"
 
 [node name="Server_connection" type="MarginContainer" parent="servers/servers" unique_id=1899510363]
 layout_mode = 2
@@ -169,4 +144,5 @@ one_shot = true
 
 [connection signal="pressed" from="menu/VBoxContainer/Debug_level" to="." method="_on_debug_level_pressed"]
 [connection signal="pressed" from="menu/VBoxContainer/Connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="servers/servers/Server_connection/HBoxContainer/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="timeout" from="Timer_Load" to="." method="_on_timer_load_timeout"]
