@@ -48,7 +48,7 @@ func _process(_delta: float) -> void:
 			if multiplayer.is_server():
 				pickup_request(entity_name)
 			else:
-				pickup_request.rpc(entity_name)
+				pickup_request.rpc_id(1,entity_name)
 #			inventory_manager.pickup_entity.rpc(entity, player)
 	else:
 		helper_label.hide()
@@ -71,7 +71,7 @@ func jump():
 func sprint():
 	sprinting = true
 
-@rpc
+@rpc("authority", "call_remote")
 func pickup_request(entity_name : String):
 	print("Item call")
 	inventory_manager.pickup_entity(entity_name, player)
