@@ -25,6 +25,10 @@ Itemregistry="*uid://dqwuwfdl50w88"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[dotnet]
+
+project/assembly_name="Deep Space- Breakthrough"
+
 [global_group]
 
 items=""
