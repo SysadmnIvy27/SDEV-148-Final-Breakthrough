@@ -71,7 +71,7 @@ func jump():
 func sprint():
 	sprinting = true
 
-@rpc("authority", "call_remote")
+@rpc("any_peer")
 func pickup_request(entity_name : String):
 	print("Item call")
 	inventory_manager.pickup_entity(entity_name, player)

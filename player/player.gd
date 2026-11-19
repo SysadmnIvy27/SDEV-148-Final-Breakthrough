@@ -11,7 +11,7 @@ extends CharacterBody3D
 @export var current_speed = 5.0
 @export var deceleration = 2.0
 @export var mouse_sensivity = GameGlobals.mouse_sens
-@export var lock_movement = true
+@export var lock_movement = false
 @export var lock_interaction = false
 @export var inventory_manager : GameInventoryManager
 @export var player_id: int = 1:
